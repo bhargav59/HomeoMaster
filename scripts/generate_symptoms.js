@@ -99,12 +99,17 @@ remedies.forEach(rem => {
             
             const { agg, amel } = extractModalities(text);
             
+            // Normalize ID to match remediesFull.json (from merge_oorep_data.js logic)
+            // Logic: name -> lowercase -> replace non-alnum with hyphen -> trim hyphens
+            // BUT we should ideally look it up if possible. For now, regenerating it consistently is safest.
+            const normalizedId = rem.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+
             // Generate entries for all mapped body parts
             targetBodyPartIds.forEach(bpId => {
                  symptoms.push({
                     id: symptomIdCounter++,
                     bodyPartId: bpId,
-                    remedyId: rem.id,
+                    remedyId: normalizedId,
                     remedyName: rem.name,
                     potency: "30C or 200C", 
                     dose: "3 pellets as needed", 
