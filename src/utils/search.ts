@@ -24,7 +24,8 @@ export const searchRemedies = (
         remedy.name.toLowerCase().includes(lowerQuery) ||
         remedy.abbrev.toLowerCase().includes(lowerQuery) ||
         remedy.keynotes.some(k => k.toLowerCase().includes(lowerQuery)) ||
-        remedy.clinicalIndications.some(c => c.toLowerCase().includes(lowerQuery))
+        remedy.clinicalIndications.some(c => c.toLowerCase().includes(lowerQuery)) ||
+        (remedy.materiaMedica && remedy.materiaMedica.some(mm => mm.text.toLowerCase().includes(lowerQuery)))
     );
 };
 
