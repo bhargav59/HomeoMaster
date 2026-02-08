@@ -46,12 +46,24 @@ function extractModalities(text) {
     let agg = "";
     let amel = "";
 
-    // Simple heuristic: look for "Worse" and "Better"
-    const worseMatch = text.match(/Worse\s*([^\.]+)/i); // Capture until period
-    if (worseMatch) agg = "Worse " + worseMatch[1].trim();
+    // Regex to find "Worse" and "Better" clauses
+    // Matches "Worse, [condition]" until semicolon or period
+    // Case insensitive, handles newlines
+    const aggMatch = text.match(/(?:^|\.|;)\s*(?:Worse|Aggravation|Agg\.?)\s*[:,]?\s*([^.;]+)/i);
+    if (aggMatch) agg = aggMatch[1].trim();
 
-    const betterMatch = text.match(/Better\s*([^\.]+)/i);
-    if (betterMatch) amel = "Better " + betterMatch[1].trim();
+    const amelMatch = text.match(/(?:^|\.|;)\s*(?:Better|Amelioration|Amel\.?)\s*[:,]?\s*([^.;]+)/i);
+    if (amelMatch) amel = amelMatch[1].trim();
+
+    // Also look for "<" and ">" symbols which sometimes denote modalities in MM
+    if (!agg && text.includes('<')) {
+         const match = text.match(/<\s*([^>.;]+)/);
+         if (match) agg = match[1].trim();
+    }
+    if (!amel && text.includes('>')) {
+         const match = text.match(/>\s*([^<.;]+)/);
+         if (match) amel = match[1].trim();
+    }
 
     return { agg, amel };
 }
