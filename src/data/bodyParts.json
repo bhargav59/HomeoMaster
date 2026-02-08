@@ -1,0 +1,135 @@
+[
+    {
+        "id": "mind",
+        "name": "Mind & Emotions",
+        "icon": "brain",
+        "description": "Mental symptoms, mood disorders, anxiety, depression, fears, emotional states",
+        "color": "#8b5cf6"
+    },
+    {
+        "id": "head",
+        "name": "Head & Vertigo",
+        "icon": "head-side",
+        "description": "Headaches, migraines, dizziness, scalp conditions, vertigo",
+        "color": "#ec4899"
+    },
+    {
+        "id": "eyes",
+        "name": "Eyes & Vision",
+        "icon": "eye",
+        "description": "Eye inflammation, vision problems, conjunctivitis, styes",
+        "color": "#06b6d4"
+    },
+    {
+        "id": "ears",
+        "name": "Ears & Hearing",
+        "icon": "ear",
+        "description": "Ear infections, hearing loss, tinnitus, ear pain",
+        "color": "#f97316"
+    },
+    {
+        "id": "nose",
+        "name": "Nose & Sinus",
+        "icon": "nose",
+        "description": "Sinusitis, allergic rhinitis, nosebleeds, nasal congestion",
+        "color": "#84cc16"
+    },
+    {
+        "id": "mouth-throat",
+        "name": "Mouth, Teeth & Throat",
+        "icon": "teeth",
+        "description": "Toothache, sore throat, mouth ulcers, tonsillitis, gum problems",
+        "color": "#ef4444"
+    },
+    {
+        "id": "respiratory",
+        "name": "Respiratory (Chest, Cough, Lungs)",
+        "icon": "lungs",
+        "description": "Coughs, bronchitis, asthma, pneumonia, chest congestion",
+        "color": "#0ea5e9"
+    },
+    {
+        "id": "digestive",
+        "name": "Digestive (Stomach & Abdomen)",
+        "icon": "stomach",
+        "description": "Indigestion, nausea, diarrhea, constipation, gastritis, liver",
+        "color": "#22c55e"
+    },
+    {
+        "id": "heart-circulatory",
+        "name": "Heart & Circulatory",
+        "icon": "heart",
+        "description": "Palpitations, blood pressure, circulation, heart conditions",
+        "color": "#dc2626"
+    },
+    {
+        "id": "back-spine",
+        "name": "Back & Spine",
+        "icon": "spine",
+        "description": "Back pain, sciatica, lumbago, spinal stiffness, cervical issues",
+        "color": "#7c3aed"
+    },
+    {
+        "id": "upper-limbs",
+        "name": "Upper Limbs (Arms, Shoulders, Hands)",
+        "icon": "hand",
+        "description": "Shoulder pain, tennis elbow, carpal tunnel, finger numbness",
+        "color": "#0891b2"
+    },
+    {
+        "id": "lower-limbs",
+        "name": "Lower Limbs (Legs, Hips, Knees, Feet)",
+        "icon": "foot",
+        "description": "Leg cramps, knee pain, sciatica, restless legs, foot problems",
+        "color": "#059669"
+    },
+    {
+        "id": "skin",
+        "name": "Skin, Hair & Nails",
+        "icon": "skin",
+        "description": "Eczema, psoriasis, acne, hair loss, fungal infections, rashes",
+        "color": "#d97706"
+    },
+    {
+        "id": "urinary-male",
+        "name": "Urinary & Male Genital",
+        "icon": "kidney",
+        "description": "UTIs, kidney stones, prostate issues, male reproductive health",
+        "color": "#4f46e5"
+    },
+    {
+        "id": "female",
+        "name": "Women's Health & Female Genital",
+        "icon": "female",
+        "description": "Menstrual disorders, menopause, pregnancy, PMS, leucorrhea",
+        "color": "#db2777"
+    },
+    {
+        "id": "children",
+        "name": "Children's Complaints",
+        "icon": "baby",
+        "description": "Teething, colic, childhood fevers, behavioral issues, growth",
+        "color": "#f472b6"
+    },
+    {
+        "id": "fever-infections",
+        "name": "Fever, Chill & Infections",
+        "icon": "thermometer",
+        "description": "Acute fevers, flu, infections, chills, septic conditions",
+        "color": "#ea580c"
+    },
+    {
+        "id": "sleep-dreams",
+        "name": "Sleep & Dreams",
+        "icon": "moon",
+        "description": "Insomnia, disturbed sleep, nightmares, sleep disorders",
+        "color": "#6366f1"
+    },
+    {
+        "id": "generals",
+        "name": "Generals (Fatigue, Weakness, Constitution)",
+        "icon": "person",
+        "description": "General vitality, constitutional types, fatigue, weakness",
+        "color": "#64748b"
+    }
+]
