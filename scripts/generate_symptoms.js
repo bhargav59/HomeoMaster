@@ -117,10 +117,20 @@ remedies.forEach(rem => {
             
             let { agg, amel } = extractModalities(text);
             
-            // Normalize ID to match remediesFull.json (from merge_oorep_data.js logic)
-            // Logic: name -> lowercase -> replace non-alnum with hyphen -> trim hyphens
-            // BUT we should ideally look it up if possible. For now, regenerating it consistently is safest.
-            const normalizedId = rem.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+            // Normalize ID to match remediesFull.json
+            // FIRST: Check if we can find it by name or abbrev in existing database
+            let normalizedId = rem.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+            
+            // Try to find an existing match in remediesFull to use that ID instead
+            const existingId = Object.keys(remediesFull).find(key => {
+                const r = remediesFull[key];
+                return r.name.toLowerCase() === rem.name.toLowerCase() || 
+                       (r.abbrev && r.abbrev.toLowerCase() === rem.abbrev?.toLowerCase());
+            });
+
+            if (existingId) {
+                normalizedId = existingId;
+            }
 
             // Fallback to General Modalities from enriched data if specific ones not found
             if (!agg || agg === "Not specified") {

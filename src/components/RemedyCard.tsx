@@ -31,14 +31,14 @@ export default function RemedyCard({ entry, onPress }: RemedyCardProps) {
                     <View style={styles.aggBadge}>
                         <Text style={styles.modalityLabel}>Agg ↓</Text>
                     </View>
-                    <Text style={styles.modalityText} numberOfLines={2}>{entry.agg}</Text>
+                    <FormattedText style={styles.modalityText} numberOfLines={2} text={entry.agg} />
                 </View>
 
                 <View style={styles.modalityRow}>
                     <View style={styles.amelBadge}>
                         <Text style={styles.modalityLabel}>Amel ↑</Text>
                     </View>
-                    <Text style={styles.modalityText} numberOfLines={2}>{entry.amel}</Text>
+                    <FormattedText style={styles.modalityText} numberOfLines={2} text={entry.amel} />
                 </View>
             </View>
         </TouchableOpacity>

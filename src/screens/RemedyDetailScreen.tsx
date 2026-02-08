@@ -63,7 +63,7 @@ export default function RemedyDetailScreen({ route }: Props) {
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Essence</Text>
                 <View style={styles.essenceCard}>
-                    <Text style={styles.essenceText}>{remedy.essence}</Text>
+                    <FormattedText style={styles.essenceText} text={remedy.essence} />
                 </View>
             </View>
 
@@ -74,7 +74,7 @@ export default function RemedyDetailScreen({ route }: Props) {
                     {remedy.keynotes.map((keynote, index) => (
                         <View key={index} style={styles.keynoteItem}>
                             <View style={styles.keynoteBullet} />
-                            <Text style={styles.keynoteText}>{keynote}</Text>
+                            <FormattedText style={styles.keynoteText} text={keynote} />
                         </View>
                     ))}
                 </View>
@@ -92,7 +92,7 @@ export default function RemedyDetailScreen({ route }: Props) {
                     <View style={styles.modalityTags}>
                         {remedy.generalModalities.agg.map((item, index) => (
                             <View key={index} style={styles.aggTag}>
-                                <Text style={styles.tagText}>{item}</Text>
+                                <FormattedText style={styles.tagText} text={item} />
                             </View>
                         ))}
                     </View>
@@ -106,7 +106,7 @@ export default function RemedyDetailScreen({ route }: Props) {
                     <View style={styles.modalityTags}>
                         {remedy.generalModalities.amel.map((item, index) => (
                             <View key={index} style={styles.amelTag}>
-                                <Text style={styles.tagText}>{item}</Text>
+                                <FormattedText style={styles.tagText} text={item} />
                             </View>
                         ))}
                     </View>
@@ -119,7 +119,7 @@ export default function RemedyDetailScreen({ route }: Props) {
                 <View style={styles.indicationsContainer}>
                     {remedy.clinicalIndications.map((indication, index) => (
                         <View key={index} style={styles.indicationTag}>
-                            <Text style={styles.indicationText}>{indication}</Text>
+                            <FormattedText style={styles.indicationText} text={indication} />
                         </View>
                     ))}
                 </View>
@@ -131,17 +131,17 @@ export default function RemedyDetailScreen({ route }: Props) {
 
                 <View style={styles.relationCard}>
                     <Text style={styles.relationLabel}>Complementary:</Text>
-                    <Text style={styles.relationValue}>{remedy.relationships.complementary.join(', ')}</Text>
+                    <FormattedText style={styles.relationValue} text={remedy.relationships.complementary.join(', ')} />
                 </View>
 
                 <View style={styles.relationCard}>
                     <Text style={styles.relationLabel}>Antidotes:</Text>
-                    <Text style={styles.relationValue}>{remedy.relationships.antidotes.join(', ')}</Text>
+                    <FormattedText style={styles.relationValue} text={remedy.relationships.antidotes.join(', ')} />
                 </View>
 
                 <View style={styles.relationCard}>
                     <Text style={styles.relationLabel}>Follows Well:</Text>
-                    <Text style={styles.relationValue}>{remedy.relationships.followsWell.join(', ')}</Text>
+                    <FormattedText style={styles.relationValue} text={remedy.relationships.followsWell.join(', ')} />
                 </View>
             </View>
 
@@ -156,7 +156,7 @@ export default function RemedyDetailScreen({ route }: Props) {
                             </View>
                         ))}
                     </View>
-                    <Text style={styles.dosingText}>{remedy.dosing}</Text>
+                    <FormattedText style={styles.dosingText} text={remedy.dosing} />
                 </View>
             </View>
 
@@ -190,10 +190,10 @@ export default function RemedyDetailScreen({ route }: Props) {
                                 </Text>
                                 {symptoms.map((symptom, index) => (
                                     <View key={index} style={styles.symptomItem}>
-                                        <Text style={styles.symptomIndication}>{symptom.indication}</Text>
+                                        <FormattedText style={styles.symptomIndication} text={symptom.indication} />
                                         <View style={styles.symptomModalities}>
-                                            <Text style={styles.symptomAgg}>↓ {symptom.agg}</Text>
-                                            <Text style={styles.symptomAmel}>↑ {symptom.amel}</Text>
+                                            <FormattedText style={styles.symptomAgg} text={'↓ ' + symptom.agg} />
+                                            <FormattedText style={styles.symptomAmel} text={'↑ ' + symptom.amel} />
                                         </View>
                                     </View>
                                 ))}
