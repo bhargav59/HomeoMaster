@@ -2,11 +2,13 @@ const fs = require('fs');
 const path = require('path');
 
 const OOREP_FILE = path.join(__dirname, '../src/data/oorepRemedies.json');
+const FULL_REMEDIES_FILE = path.join(__dirname, '../src/data/remediesFull.json');
 const BODY_PARTS_FILE = path.join(__dirname, '../src/data/bodyParts.json');
 const OUTPUT_FILE = path.join(__dirname, '../src/data/symptomEntries.json');
 
 // Load Data
 const remedies = JSON.parse(fs.readFileSync(OOREP_FILE, 'utf8'));
+const remediesFull = JSON.parse(fs.readFileSync(FULL_REMEDIES_FILE, 'utf8'));
 const bodyPartsList = JSON.parse(fs.readFileSync(BODY_PARTS_FILE, 'utf8'));
 
 // Map OOREP Chapters (uppercase usually) to Body Part IDs
@@ -48,11 +50,15 @@ function extractModalities(text) {
 
     // Regex to find "Worse" and "Better" clauses
     // Matches "Worse, [condition]" until semicolon or period
-    // Case insensitive, handles newlines
-    const aggMatch = text.match(/(?:^|\.|;)\s*(?:Worse|Aggravation|Agg\.?)\s*[:,]?\s*([^.;]+)/i);
+    // Case insensitive, handles newlines, handles *Worse*
+    // (?:\*|)\s*Worse(?:\*|)\s*[:,]?\s*
+    
+    // Aggravation
+    const aggMatch = text.match(/(?:^|\.|;)\s*(?:\*|)(?:Worse|Aggravation|Agg\.?)(?:\*|)\s*[:,]?\s*([^.;<]+)/i);
     if (aggMatch) agg = aggMatch[1].trim();
 
-    const amelMatch = text.match(/(?:^|\.|;)\s*(?:Better|Amelioration|Amel\.?)\s*[:,]?\s*([^.;]+)/i);
+    // Amelioration
+    const amelMatch = text.match(/(?:^|\.|;)\s*(?:\*|)(?:Better|Amelioration|Amel\.?)(?:\*|)\s*[:,]?\s*([^.;<]+)/i);
     if (amelMatch) amel = amelMatch[1].trim();
 
     // Also look for "<" and ">" symbols which sometimes denote modalities in MM
@@ -109,12 +115,27 @@ remedies.forEach(rem => {
 
             const indication = text.length > 250 ? text.substring(0, 250) + "..." : text;
             
-            const { agg, amel } = extractModalities(text);
+            let { agg, amel } = extractModalities(text);
             
             // Normalize ID to match remediesFull.json (from merge_oorep_data.js logic)
             // Logic: name -> lowercase -> replace non-alnum with hyphen -> trim hyphens
             // BUT we should ideally look it up if possible. For now, regenerating it consistently is safest.
             const normalizedId = rem.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+
+            // Fallback to General Modalities from enriched data if specific ones not found
+            if (!agg || agg === "Not specified") {
+                const fullRemedy = remediesFull[normalizedId];
+                if (fullRemedy && fullRemedy.generalModalities && fullRemedy.generalModalities.agg.length > 0) {
+                    agg = fullRemedy.generalModalities.agg.join(", ");
+                }
+            }
+
+            if (!amel || amel === "Not specified") {
+                const fullRemedy = remediesFull[normalizedId];
+                if (fullRemedy && fullRemedy.generalModalities && fullRemedy.generalModalities.amel.length > 0) {
+                    amel = fullRemedy.generalModalities.amel.join(", ");
+                }
+            }
 
             // Generate entries for all mapped body parts
             targetBodyPartIds.forEach(bpId => {

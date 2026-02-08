@@ -23,11 +23,17 @@ Object.values(remedies).forEach(remedy => {
         m.section === "Introduction"
     );
 
-    if (introEntry && (!remedy.essence || remedy.essence.length < 10)) {
-        // Take the first paragraph or sentence
-        const firstPara = introEntry.text.split('\n')[0];
-        remedy.essence = firstPara.length > 300 ? firstPara.substring(0, 300) + '...' : firstPara;
-        modified = true;
+    if (introEntry && (!remedy.essence || remedy.essence.length < 50 || remedy.essence.includes(remedy.name.toUpperCase()))) {
+        // Remove title line if present (e.g. "Socotrine Aloes (ALOE)")
+        let lines = introEntry.text.split('\n').map(l => l.trim()).filter(l => l);
+        if (lines.length > 0 && (lines[0].toUpperCase().includes('ALOE') || lines[0].length < 50)) {
+            lines.shift();
+        }
+        const essenceText = lines.join('\n\n');
+        if (essenceText.length > 10) {
+             remedy.essence = essenceText.length > 500 ? essenceText.substring(0, 500) + '...' : essenceText;
+             modified = true;
+        }
     }
 
     // 2. Extract Modalities
@@ -36,19 +42,24 @@ Object.values(remedies).forEach(remedy => {
         const text = modEntry.text;
         
         // Extract Worse
-        const worseMatch = text.match(/Worse,? (.*?)\.? (Better|$)/i);
+        // Handle *Worse*, Worse:, Worse; etc.
+        // Make punctuation optional [:,]?
+        const worseMatch = text.match(/(?:\*|)\s*Worse(?:\*|)\s*[:,]?\s*(.*?)(?:\s*(?:\*|)(?:Better|$)|\n|$)/is);
         if (worseMatch && worseMatch[1]) {
             const worseText = worseMatch[1].trim();
             // Split by semicolons or commas if possible, but keep it simple for now as strings
-            remedy.generalModalities.agg = worseText.split(/[;,]/).map(s => s.trim()).filter(s => s.length > 2);
+            // Remove trailing dot or asterisk
+            const cleanWorse = worseText.replace(/[.*]+$/, '');
+            remedy.generalModalities.agg = cleanWorse.split(/[;]/).map(s => s.trim()).filter(s => s.length > 2);
             modified = true;
         }
 
         // Extract Better
-        const betterMatch = text.match(/Better,? (.*?)\.?($|Worse)/i);
+        const betterMatch = text.match(/(?:\*|)\s*Better(?:\*|)\s*[:,]?\s*(.*?)(?:$|(?:\*|)Worse|\n)/is);
         if (betterMatch && betterMatch[1]) {
             const betterText = betterMatch[1].trim();
-            remedy.generalModalities.amel = betterText.split(/[;,]/).map(s => s.trim()).filter(s => s.length > 2);
+            const cleanBetter = betterText.replace(/[.*]+$/, '');
+            remedy.generalModalities.amel = cleanBetter.split(/[;]/).map(s => s.trim()).filter(s => s.length > 2);
             modified = true;
         }
     }
