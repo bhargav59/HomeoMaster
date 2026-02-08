@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SymptomEntry } from '../types';
+import FormattedText from './FormattedText';
 
 interface RemedyCardProps {
     entry: SymptomEntry;
@@ -23,9 +24,7 @@ export default function RemedyCard({ entry, onPress }: RemedyCardProps) {
                 <Text style={styles.doseText}>{entry.dose}</Text>
             </View>
 
-            <Text style={styles.indication} numberOfLines={3}>
-                {entry.indication}
-            </Text>
+            <FormattedText style={styles.indication} numberOfLines={3} text={entry.indication} />
 
             <View style={styles.modalitiesContainer}>
                 <View style={styles.modalityRow}>

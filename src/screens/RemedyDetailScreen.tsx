@@ -5,6 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { getRemedyById, getRemedySymptomsByBodyPart, getBodyPartById } from '../utils/dataLoader';
 import { useAppStore } from '../store/useAppStore';
+import FormattedText from '../components/FormattedText';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'RemedyDetail'>;
 
@@ -170,7 +171,7 @@ export default function RemedyDetailScreen({ route }: Props) {
                                 <Text style={styles.mmSource}>{entry.source}</Text>
                             </View>
                             <Text style={styles.mmChapter}>{entry.chapter} - {entry.section}</Text>
-                            <Text style={styles.mmText}>{entry.text}</Text>
+                            <FormattedText style={styles.mmText} text={entry.text} />
                         </View>
                     ))}
                 </View>
